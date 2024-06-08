@@ -1,9 +1,42 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import React from "react";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+const urlNotBack = {
+  account: "Account",
+  mark: "Mark",
+  home: "Home",
+  chat: "Chat",
+  notify: "Notify",
+  class: "Class",
+};
 
 const HeaderInfo = ({ title }: { title: string }) => {
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const handleBack = () => {
+    console.log(route.name);
+    navigation.goBack();
+  };
+
+  const shouldShowBackButton = !Object.values(urlNotBack).includes(route.name);
+
   return (
     <View>
       <View style={styles.wrapperHeader}>
+        {shouldShowBackButton && (
+          <TouchableHighlight underlayColor="#DDDDDD" onPress={handleBack}>
+            <Ionicons name="chevron-back-outline" size={24} color="black" />
+          </TouchableHighlight>
+        )}
         <Image
           source={require("../assets/hoaanhdao.png")}
           style={styles.logo}

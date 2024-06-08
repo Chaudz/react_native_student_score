@@ -3,7 +3,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import Entypo from "@expo/vector-icons/Entypo";
-import HeaderInfo from "../../../components/HeaderInfo";
+import HeaderInfo from "../HeaderInfo";
 import RowInfo from "./components/RowInfo";
 import React from "react";
 
@@ -22,7 +22,7 @@ const dataList = [
   },
 ];
 
-const Account = () => {
+const Account = ({ navigation }: { navigation: any }) => {
   const [showModalInfo, setShowMOdalInfo] = React.useState(false);
 
   const handleCloseModal = () => {
@@ -31,6 +31,7 @@ const Account = () => {
 
   const handleShowModal = (id: number) => {
     if (id === 1) setShowMOdalInfo(true);
+    if (id === 2) navigation.navigate("Forum");
   };
 
   return (

@@ -16,11 +16,18 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Account from "../screens/Student/Account";
+import Account from "../components/Account";
 import HomeScreen from "../screens/Student/Home";
 import SubjectDetail from "../screens/Student/Mark/components/SubjectDetail";
 import Notify from "../screens/Student/Notify";
 import ChatScreen from "../screens/Chat";
+import Fourm from "../screens/Forum";
+import Class from "../screens/Lecturer/Class";
+import GradeEntry from "../screens/Lecturer/GradeEntry";
+import GradeEntryDetail from "../screens/Lecturer/GradeEntry/components/GradeEntryDetail";
+import GradeExport from "../screens/Lecturer/GradeExport";
+import EnterGradeCSV from "../screens/Lecturer/EnterGradeCSV";
+import SearchStudent from "../screens/Lecturer/SearchStudent";
 
 interface TabBarIconProps {
   name: string;
@@ -32,7 +39,7 @@ interface TabBarIconProps {
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export const screenOptions = ({ route }): BottomTabNavigationOptions => ({
+export const screenOptions = (): BottomTabNavigationOptions => ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarActiveTintColor: "#ffffff",
@@ -49,7 +56,55 @@ export const screenOptions = ({ route }): BottomTabNavigationOptions => ({
 
 const LecturerNavigator = () => (
   <Tab.Navigator screenOptions={screenOptions}>
-    <Tab.Screen name="Home" component={HomeScreen} />
+    <Tab.Screen
+      name="Account"
+      component={Account}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="account" size={24} color={color} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Class"
+      component={Class}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="class" size={24} color={color} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="home" color={color} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Chat"
+      component={ChatScreen}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons
+            name="chatbubble-ellipses-outline"
+            size={24}
+            color={color}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Notify"
+      component={Notify}
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <MaterialIcons name="notifications-active" size={24} color={color} />
+        ),
+      }}
+    />
   </Tab.Navigator>
 );
 
@@ -138,11 +193,23 @@ const AppNavigator = () => {
   const renderScreens = () => {
     if (role) {
       return role === "lecturer" ? (
-        <Stack.Screen name="LecturerNavigator" component={LecturerNavigator} />
+        <>
+          <Stack.Screen
+            name="LecturerNavigator"
+            component={LecturerNavigator}
+          />
+          <Stack.Screen name="Forum" component={Fourm} />
+          <Stack.Screen name="GradeEntry" component={GradeEntry} />
+          <Stack.Screen name="GradeEntryDetail" component={GradeEntryDetail} />
+          <Stack.Screen name="GradeExport" component={GradeExport} />
+          <Stack.Screen name="EnterGrade" component={EnterGradeCSV} />
+          <Stack.Screen name="SearchStudent" component={SearchStudent} />
+        </>
       ) : (
         <>
           <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
           <Stack.Screen name="SubjectDetail" component={SubjectDetail} />
+          <Stack.Screen name="Forum" component={Fourm} />
         </>
       );
     } else {

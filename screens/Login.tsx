@@ -4,9 +4,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Pressable,
   TextInput,
-  Platform,
+  Pressable,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -22,7 +21,9 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClick = () => {
+  const handleClickLogin = () => {};
+
+  const handleClickRegister = () => {
     navigation.navigate("Register");
   };
 
@@ -56,9 +57,16 @@ const LoginScreen = () => {
               secureTextEntry
               autoCapitalize="none"
             />
+            <Pressable onPress={handleClickRegister}>
+              <Text
+                style={{ textAlign: "right", color: "white", marginEnd: 20 }}
+              >
+                Đăng ký
+              </Text>
+            </Pressable>
           </View>
           <Pressable
-            onPress={handleClick}
+            onPress={handleClickLogin}
             style={({ pressed }) => [
               {
                 backgroundColor: pressed ? "#005bb5" : "#0066cc",

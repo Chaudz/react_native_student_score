@@ -13,11 +13,11 @@ const listSubject = [
   },
 ];
 
-const ListSubject = ({ navigation }: { navigation: any }) => {
+const ListSubject = () => {
   return (
     <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
       {listSubject.map((subject, index) => (
-        <Subject key={index} title={subject.title} navigation={navigation} />
+        <Subject key={index} title={subject.title} />
       ))}
     </View>
   );

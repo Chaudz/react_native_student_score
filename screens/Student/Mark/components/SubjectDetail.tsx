@@ -1,7 +1,14 @@
 import { View, Text, Button } from "react-native";
 import HeaderInfo from "../../../../components/HeaderInfo";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 
-const SubjectDetail = ({ navigation }: { navigation: any }) => {
+const SubjectDetail = () => {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
   return (
     <View>
       <HeaderInfo title="Điểm môn học" />
