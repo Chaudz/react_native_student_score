@@ -38,7 +38,7 @@ const HeaderInfo = ({ title }: { title: string }) => {
           </TouchableHighlight>
         )}
         <Image
-          source={require("../assets/hoaanhdao.png")}
+          source={require("../assets/Logo-DH-Mo-TPHCM.webp")}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   textTitle: {
-    color: "green",
+    color: "#1b00be",
     fontSize: 20,
   },
 });

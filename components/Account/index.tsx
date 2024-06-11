@@ -1,11 +1,18 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TouchableHighlight,
+} from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { MaterialIcons } from "@expo/vector-icons";
 import Entypo from "@expo/vector-icons/Entypo";
 import HeaderInfo from "../HeaderInfo";
 import RowInfo from "./components/RowInfo";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const dataList = [
   {
@@ -16,22 +23,66 @@ const dataList = [
   },
   {
     id: 2,
-    title: "Hỏi - Đáp   ",
+    title: "Hỏi - Đáp",
     description: "Diễn đàn hỏi đáp sinh viên",
     icon: <Entypo name="chat" size={24} color="white" />,
   },
 ];
 
+const ROLES = {
+  3: "Sinh viên",
+  2: "Giảng viên",
+};
+
+interface UserInfo {
+  userId: string | null;
+  fullName: string | null;
+  email: string | null;
+  role: string | null;
+}
+
 const Account = ({ navigation }: { navigation: any }) => {
-  const [showModalInfo, setShowMOdalInfo] = React.useState(false);
+  const [showModalInfo, setShowModalInfo] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    userId: null,
+    fullName: null,
+    email: null,
+    role: null,
+  });
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const userId = await AsyncStorage.getItem("userId");
+      const fullName = await AsyncStorage.getItem("fullName");
+      const email = await AsyncStorage.getItem("email");
+      let role = await AsyncStorage.getItem("role");
+
+      if (role === "2") role = "Giảng viên";
+      else role = "Sinh viên";
+
+      setUserInfo({ userId, fullName, email, role });
+    };
+
+    fetchInfo();
+  }, []);
 
   const handleCloseModal = () => {
-    setShowMOdalInfo(false);
+    setShowModalInfo(false);
   };
 
   const handleShowModal = (id: number) => {
-    if (id === 1) setShowMOdalInfo(true);
+    if (id === 1) setShowModalInfo(true);
     if (id === 2) navigation.navigate("Forum");
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("role");
+    await AsyncStorage.removeItem("userId");
+    await AsyncStorage.removeItem("email");
+    await AsyncStorage.removeItem("fullName");
+    await AsyncStorage.removeItem("avatar");
+    navigation.navigate("Login");
   };
 
   return (
@@ -46,38 +97,42 @@ const Account = ({ navigation }: { navigation: any }) => {
           ))}
         </View>
 
-        <View
-          style={{
-            marginTop: 20,
-            width: "100%",
-            padding: 10,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: "white",
-            borderRadius: 10,
-          }}
-        >
+        <TouchableHighlight underlayColor="none" onPress={handleLogout}>
           <View
             style={{
-              backgroundColor: "green",
-              borderRadius: 8,
-              height: 40,
-              width: 40,
+              marginTop: 20,
+              width: "100%",
+              padding: 10,
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
               alignItems: "center",
+              backgroundColor: "white",
+              borderRadius: 10,
             }}
           >
-            <MaterialIcons name="logout" size={24} color="white" />
+            <View
+              style={{
+                backgroundColor: "#1b00be",
+                borderRadius: 8,
+                height: 40,
+                width: 40,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <MaterialIcons name="logout" size={24} color="white" />
+            </View>
+
+            <View style={{ flex: 1, marginStart: 20 }}>
+              <Text style={{ fontWeight: "600" }}>Đăng xuất</Text>
+              <Text>Đăng xuất tài khoản</Text>
+            </View>
+
+            <AntDesign name="right" size={20} color="#ddd" />
           </View>
-          <View style={{ flex: 1, marginStart: 20 }}>
-            <Text style={{ fontWeight: "600" }}>Đăng xuất</Text>
-            <Text>Đăng xuất tài khoản</Text>
-          </View>
-          <AntDesign name="right" size={20} color="#ddd" />
-        </View>
+        </TouchableHighlight>
       </View>
       {/* INFO Student */}
       {showModalInfo && (
@@ -98,7 +153,7 @@ const Account = ({ navigation }: { navigation: any }) => {
           <Text
             style={{
               color: "white",
-              backgroundColor: "green",
+              backgroundColor: "#1b00be",
               paddingVertical: 10,
               textAlign: "center",
               fontWeight: "600",
@@ -117,10 +172,8 @@ const Account = ({ navigation }: { navigation: any }) => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontWeight: "600", fontSize: 17 }}>
-                Giới tính:
-              </Text>
-              <Text style={{ fontSize: 17 }}>Nam</Text>
+              <Text style={{ fontWeight: "600", fontSize: 17 }}>Id:</Text>
+              <Text style={{ fontSize: 17 }}>{userInfo.userId}</Text>
             </View>
             <View
               style={{
@@ -131,9 +184,9 @@ const Account = ({ navigation }: { navigation: any }) => {
               }}
             >
               <Text style={{ fontWeight: "600", fontSize: 17 }}>
-                Ngày sinh:
+                Full name:
               </Text>
-              <Text style={{ fontSize: 17 }}>22/10/2003</Text>
+              <Text style={{ fontSize: 17 }}>{userInfo.fullName}</Text>
             </View>
             <View
               style={{
@@ -143,8 +196,8 @@ const Account = ({ navigation }: { navigation: any }) => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontWeight: "600", fontSize: 17 }}>Nơi sinh:</Text>
-              <Text style={{ fontSize: 17 }}>Quảng Ngãi</Text>
+              <Text style={{ fontWeight: "600", fontSize: 17 }}>Email:</Text>
+              <Text style={{ fontSize: 17 }}>{userInfo.email}</Text>
             </View>
             <View
               style={{
@@ -154,14 +207,14 @@ const Account = ({ navigation }: { navigation: any }) => {
                 marginTop: 20,
               }}
             >
-              <Text style={{ fontWeight: "600", fontSize: 17 }}>Dân tộc:</Text>
-              <Text style={{ fontSize: 17 }}>Kinh</Text>
+              <Text style={{ fontWeight: "600", fontSize: 17 }}>Chức vụ:</Text>
+              <Text style={{ fontSize: 17 }}>{userInfo.role}</Text>
             </View>
           </View>
           <Pressable
             style={{
               padding: 10,
-              backgroundColor: "green",
+              backgroundColor: "#1b00be",
               borderBottomLeftRadius: 10,
               borderBottomRightRadius: 10,
             }}

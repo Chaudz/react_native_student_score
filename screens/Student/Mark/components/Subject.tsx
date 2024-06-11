@@ -6,10 +6,10 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 
-const Subject = ({ title }: { title: string }) => {
+const Subject = ({ title, id }: { title: string; id: number }) => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const handleClick = () => {
-    navigation.navigate("SubjectDetail");
+    navigation.navigate("SubjectDetail", { subjectId: id });
   };
 
   return (

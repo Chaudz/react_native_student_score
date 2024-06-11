@@ -17,7 +17,7 @@ import {
 } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Account from "../components/Account";
-import HomeScreen from "../screens/Student/Home";
+import HomeScreen from "../components/Home";
 import SubjectDetail from "../screens/Student/Mark/components/SubjectDetail";
 import Notify from "../screens/Student/Notify";
 import ChatScreen from "../screens/Chat";
@@ -36,6 +36,11 @@ interface TabBarIconProps {
   library: "MaterialCommunityIcons" | "Ionicons";
 }
 
+const ROLES = {
+  student: 3,
+  teacher: 2,
+};
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -50,7 +55,7 @@ export const screenOptions = (): BottomTabNavigationOptions => ({
     left: 0,
     elevation: 0,
     height: 60,
-    backgroundColor: "#007700",
+    backgroundColor: "#1b00be",
   },
 });
 
@@ -162,19 +167,26 @@ const StudentNavigator = () => (
   </Tab.Navigator>
 );
 
-const getUserRoleFromToken = async (token: string) => {
-  return "lecturer"; // giả sử luôn trả về vai trò giảng viên, thay đổi nếu cần
+const getUserRole = async () => {
+  try {
+    const role = (await AsyncStorage.getItem("role")) as string;
+    return Number.parseInt(role);
+  } catch (error) {
+    console.log("Error getting user role from token:", error);
+    return 0;
+  }
 };
 
 const AppNavigator = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [role, setRole] = useState("student");
+  const [role, setRole] = useState(0);
 
   useEffect(() => {
     const checkToken = async () => {
-      const token = await AsyncStorage.getItem("token");
+      const token = await AsyncStorage.getItem("accessToken");
+
       if (token) {
-        let role = await getUserRoleFromToken(token);
+        let role = await getUserRole();
         setRole(role);
       }
       setIsLoading(false);
@@ -185,38 +197,49 @@ const AppNavigator = () => {
 
   const renderNavigators = () => (
     <>
-      <Stack.Screen name="LecturerNavigator" component={LecturerNavigator} />
-      <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
+      <Stack.Screen name="GradeEntry" component={GradeEntry} />
+      <Stack.Screen name="GradeEntryDetail" component={GradeEntryDetail} />
+      <Stack.Screen name="GradeExport" component={GradeExport} />
+      <Stack.Screen name="EnterGrade" component={EnterGradeCSV} />
+      <Stack.Screen name="SearchStudent" component={SearchStudent} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Forum" component={Fourm} />
+      <Stack.Screen name="SubjectDetail" component={SubjectDetail} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </>
   );
 
   const renderScreens = () => {
-    if (role) {
-      return role === "lecturer" ? (
+    if (role === ROLES.teacher) {
+      return (
         <>
           <Stack.Screen
             name="LecturerNavigator"
             component={LecturerNavigator}
           />
-          <Stack.Screen name="Forum" component={Fourm} />
-          <Stack.Screen name="GradeEntry" component={GradeEntry} />
-          <Stack.Screen name="GradeEntryDetail" component={GradeEntryDetail} />
-          <Stack.Screen name="GradeExport" component={GradeExport} />
-          <Stack.Screen name="EnterGrade" component={EnterGradeCSV} />
-          <Stack.Screen name="SearchStudent" component={SearchStudent} />
+          <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
+          {renderNavigators()}
         </>
-      ) : (
+      );
+    } else if (role === ROLES.student) {
+      return (
         <>
           <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
-          <Stack.Screen name="SubjectDetail" component={SubjectDetail} />
-          <Stack.Screen name="Forum" component={Fourm} />
+          <Stack.Screen
+            name="LecturerNavigator"
+            component={LecturerNavigator}
+          />
+          {renderNavigators()}
         </>
       );
     } else {
       return (
         <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen
+            name="LecturerNavigator"
+            component={LecturerNavigator}
+          />
+          <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
           {renderNavigators()}
         </>
       );

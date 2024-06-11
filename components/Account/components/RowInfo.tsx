@@ -32,7 +32,7 @@ const RowInfo: React.FC<IProps> = ({
       >
         <View
           style={{
-            backgroundColor: "green",
+            backgroundColor: "#1b00be",
             borderRadius: 8,
             height: 40,
             width: 40,

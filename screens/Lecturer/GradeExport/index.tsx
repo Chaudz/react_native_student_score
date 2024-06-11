@@ -23,7 +23,7 @@ const GradeExport = () => {
         >
           <View
             style={{
-              backgroundColor: "green",
+              backgroundColor: "#1b00be",
               borderRadius: 5,
               padding: 10,
               display: "flex",

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,6 +7,9 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   TouchableHighlight,
+  Image,
+  Button,
+  Alert,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import {
@@ -13,14 +17,91 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
-import { useState } from "react";
+import axios from "axios";
+import * as ImagePicker from "expo-image-picker";
+
+const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/doguzyfn7/image/upload";
+const UPLOAD_PRESET = "demo0002";
 
 const RegisterScreen = () => {
+  const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [birthDay, setBirthDay] = useState("");
-  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
+  const [id, setId] = useState("");
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const uploadImageToCloudinary = async (imageUri: string) => {
+    const data = new FormData();
+    data.append("file", {
+      uri: imageUri,
+      type: "image/jpeg", // hoặc 'image/png'
+      name: "upload.jpg", // hoặc 'upload.png'
+    });
+    data.append("upload_preset", `${process.env["UPLOAD_PRESET"]}`);
+    try {
+      const response = await axios.post(
+        `${process.env["CLOUDINARY_URL"]}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary", error);
+      return null;
+    }
+  };
+
+  const handleRegister = async () => {
+    if (!email || !password || !name || !id) {
+      Alert.alert("Error", "Please fill all fields");
+      return;
+    }
+
+    let avatarUrl = null;
+    if (image) {
+      avatarUrl = await uploadImageToCloudinary(image);
+    }
+    try {
+      const response = await axios.post(
+        `${process.env["API_BASE_URL"]}/api/register/`,
+        {
+          email,
+          password,
+          full_name: name,
+          student_code: id,
+          avatar_url: avatarUrl,
+        }
+      );
+
+      if (response.data) {
+        Alert.alert("Register successfully");
+        navigation.navigate("Login");
+        return;
+      }
+    } catch (error) {
+      Alert.alert("Please fill all fields and try again");
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -32,7 +113,7 @@ const RegisterScreen = () => {
           backgroundColor: "#00ad00",
         }}
         resetScrollToCoords={{ x: 0, y: 0 }}
-        scrollEnabled={true}
+        scrollEnabled
       >
         <View style={{ width: "100%", padding: 20 }}>
           <TextInput
@@ -43,6 +124,15 @@ const RegisterScreen = () => {
             keyboardType="email-address"
             autoCapitalize="none"
           />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            secureTextEntry
+          />
           <TextInput
             style={styles.input}
             placeholder="Full Name"
@@ -52,18 +142,17 @@ const RegisterScreen = () => {
           />
           <TextInput
             style={styles.input}
-            placeholder="BirthDay"
-            value={birthDay}
-            onChangeText={setBirthDay}
+            placeholder="ID"
+            value={id}
+            onChangeText={setId}
             autoCapitalize="none"
           />
-          <TextInput
-            style={styles.input}
-            placeholder="Gender"
-            value={email}
-            onChangeText={setGender}
-            autoCapitalize="none"
-          />
+
+          <View style={styles.photoContainer}>
+            <Button title="Choose Photo" onPress={pickImage} />
+            {image && <Image source={{ uri: image }} style={styles.image} />}
+          </View>
+
           <TouchableHighlight
             style={{
               marginTop: 20,
@@ -71,6 +160,7 @@ const RegisterScreen = () => {
               borderRadius: 15,
               padding: 10,
             }}
+            onPress={handleRegister}
           >
             <Text
               style={{
@@ -100,6 +190,22 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: "#fff",
     textAlign: "center",
+  },
+  photoContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  image: {
+    width: 50,
+    height: 35,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
   },
 });
 

@@ -8,6 +8,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import {
   useNavigation,
@@ -15,14 +16,60 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleClickLogin = () => {};
+  const handleClickLogin = async () => {
+    try {
+      console.log(process.env["API_BASE_URL"]);
 
+      const response = await axios.post(
+        `${process.env["API_BASE_URL"]}/api/login/`,
+        {
+          email: email,
+          password: password,
+        }
+      );
+
+      console.log(response.data);
+
+      if (response.data) {
+        await AsyncStorage.setItem(
+          "userId",
+          JSON.stringify(response.data.user_info.id)
+        );
+        await AsyncStorage.setItem("accessToken", response.data.access);
+        await AsyncStorage.setItem(
+          "role",
+          JSON.stringify(response.data.user_info.role_id)
+        );
+        await AsyncStorage.setItem(
+          "fullName",
+          response.data.user_info.full_name
+        );
+        await AsyncStorage.setItem("email", response.data.user_info.email);
+        await AsyncStorage.setItem("code", response.data.user_info.studen_code);
+        await AsyncStorage.setItem(
+          "avatar",
+          response.data.user_info.avatar_url
+        );
+
+        if (response.data.user_info.role_id == 2) {
+          navigation.navigate("LecturerNavigator");
+        } else if (response.data.user_info.role_id == 3) {
+          navigation.navigate("StudentNavigator");
+        }
+      }
+    } catch (error) {
+      Alert.alert("Please fill all fields and try again");
+      console.log("eooor", error);
+    }
+  };
   const handleClickRegister = () => {
     navigation.navigate("Register");
   };
@@ -36,7 +83,7 @@ const LoginScreen = () => {
       >
         <View style={styles.wrapper}>
           <Image
-            source={require("../assets/logodonga.png")}
+            source={require("../assets/Logo-DH-Mo-TPHCM.webp")}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -87,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00ad00",
+    backgroundColor: "#fff",
   },
   wrapper: {
     width: "80%",

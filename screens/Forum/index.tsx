@@ -10,7 +10,7 @@ const Fourm = () => {
           <Pressable
             style={{
               padding: 15,
-              backgroundColor: "green",
+              backgroundColor: "#1b00be",
               width: 150,
               borderRadius: 20,
             }}
@@ -50,18 +50,26 @@ const Fourm = () => {
                 />
                 <View>
                   <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
+                    style={{
+                      fontWeight: "600",
+                      color: "#1b00be",
+                      fontSize: 17,
+                    }}
                   >
                     Bùi Văn Châu
                   </Text>
                   <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
+                    style={{
+                      fontWeight: "400",
+                      color: "#1b00be",
+                      fontSize: 15,
+                    }}
                   >
                     Ngày đăng: 22/10/2003
                   </Text>
                 </View>
               </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
+              <Text style={{ marginTop: 5, color: "#1b00be" }}>
                 Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
               </Text>
             </View>
@@ -87,18 +95,26 @@ const Fourm = () => {
                 />
                 <View>
                   <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
+                    style={{
+                      fontWeight: "600",
+                      color: "#1b00be",
+                      fontSize: 17,
+                    }}
                   >
                     Bùi Văn Châu
                   </Text>
                   <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
+                    style={{
+                      fontWeight: "400",
+                      color: "#1b00be",
+                      fontSize: 15,
+                    }}
                   >
                     Ngày đăng: 22/10/2003
                   </Text>
                 </View>
               </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
+              <Text style={{ marginTop: 5, color: "#1b00be" }}>
                 Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
               </Text>
             </View>
@@ -124,18 +140,26 @@ const Fourm = () => {
                 />
                 <View>
                   <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
+                    style={{
+                      fontWeight: "600",
+                      color: "#1b00be",
+                      fontSize: 17,
+                    }}
                   >
                     Bùi Văn Châu
                   </Text>
                   <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
+                    style={{
+                      fontWeight: "400",
+                      color: "#1b00be",
+                      fontSize: 15,
+                    }}
                   >
                     Ngày đăng: 22/10/2003
                   </Text>
                 </View>
               </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
+              <Text style={{ marginTop: 5, color: "#1b00be" }}>
                 Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
               </Text>
             </View>
@@ -161,18 +185,26 @@ const Fourm = () => {
                 />
                 <View>
                   <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
+                    style={{
+                      fontWeight: "600",
+                      color: "#1b00be",
+                      fontSize: 17,
+                    }}
                   >
                     Bùi Văn Châu
                   </Text>
                   <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
+                    style={{
+                      fontWeight: "400",
+                      color: "#1b00be",
+                      fontSize: 15,
+                    }}
                   >
                     Ngày đăng: 22/10/2003
                   </Text>
                 </View>
               </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
+              <Text style={{ marginTop: 5, color: "#1b00be" }}>
                 Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
               </Text>
             </View>
@@ -198,55 +230,26 @@ const Fourm = () => {
                 />
                 <View>
                   <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
+                    style={{
+                      fontWeight: "600",
+                      color: "#1b00be",
+                      fontSize: 17,
+                    }}
                   >
                     Bùi Văn Châu
                   </Text>
                   <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
+                    style={{
+                      fontWeight: "400",
+                      color: "#1b00be",
+                      fontSize: 15,
+                    }}
                   >
                     Ngày đăng: 22/10/2003
                   </Text>
                 </View>
               </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{ fontWeight: "600", color: "green", fontSize: 17 }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{ fontWeight: "400", color: "green", fontSize: 15 }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "green" }}>
+              <Text style={{ marginTop: 5, color: "#1b00be" }}>
                 Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
               </Text>
             </View>
