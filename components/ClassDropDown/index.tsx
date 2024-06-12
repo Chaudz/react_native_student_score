@@ -1,25 +1,53 @@
-import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const ClassDropDown = () => {
+const ClassDropDown = ({
+  updateClassId,
+}: {
+  updateClassId: (id: string) => void;
+}) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string | null>("value1");
-  const [items, setItems] = useState([
-    { label: "ST21A2A", value: "value1" },
-    { label: "ST21A3A", value: "value2" },
-    { label: "ST21A2B", value: "value3" },
-  ]);
+  const [ClassId, setClassId] = useState<string | null>("");
+  const [listClass, setListClass] = useState([]);
+
+  const onChangeClass = () => {
+    updateClassId(ClassId || "");
+  };
+
+  useEffect(() => {
+    try {
+      const getAllClassByTeacherId = async () => {
+        const teacherId = await AsyncStorage.getItem("userId");
+
+        const response = await axios.get(
+          `${process.env.API_BASE_URL}/api/lecturer/${teacherId}/classes/`
+        );
+
+        if (response.data) {
+          const newClasses = response.data.map((item: any) => ({
+            label: item.name,
+            value: item.id,
+          }));
+
+          setListClass(newClasses);
+        }
+      };
+      getAllClassByTeacherId();
+    } catch (error) {}
+  }, []);
 
   return (
     <View>
       <DropDownPicker
         open={open}
-        value={value}
-        items={items}
+        value={ClassId}
+        items={listClass || []}
         setOpen={setOpen}
-        setValue={setValue}
-        setItems={setItems}
+        setValue={setClassId}
+        onChangeValue={onChangeClass}
         style={styles.dropdown}
       />
     </View>

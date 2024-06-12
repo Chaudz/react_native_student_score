@@ -35,7 +35,7 @@ const ROLES = {
 };
 
 interface UserInfo {
-  userId: string | null;
+  code: string | null;
   fullName: string | null;
   email: string | null;
   role: string | null;
@@ -44,7 +44,7 @@ interface UserInfo {
 const Account = ({ navigation }: { navigation: any }) => {
   const [showModalInfo, setShowModalInfo] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({
-    userId: null,
+    code: null,
     fullName: null,
     email: null,
     role: null,
@@ -52,7 +52,7 @@ const Account = ({ navigation }: { navigation: any }) => {
 
   useEffect(() => {
     const fetchInfo = async () => {
-      const userId = await AsyncStorage.getItem("userId");
+      const code = await AsyncStorage.getItem("code");
       const fullName = await AsyncStorage.getItem("fullName");
       const email = await AsyncStorage.getItem("email");
       let role = await AsyncStorage.getItem("role");
@@ -60,7 +60,7 @@ const Account = ({ navigation }: { navigation: any }) => {
       if (role === "2") role = "Giảng viên";
       else role = "Sinh viên";
 
-      setUserInfo({ userId, fullName, email, role });
+      setUserInfo({ code, fullName, email, role });
     };
 
     fetchInfo();
@@ -173,7 +173,7 @@ const Account = ({ navigation }: { navigation: any }) => {
               }}
             >
               <Text style={{ fontWeight: "600", fontSize: 17 }}>Id:</Text>
-              <Text style={{ fontSize: 17 }}>{userInfo.userId}</Text>
+              <Text style={{ fontSize: 17 }}>{userInfo.code}</Text>
             </View>
             <View
               style={{

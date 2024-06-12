@@ -28,6 +28,7 @@ import GradeEntryDetail from "../screens/Lecturer/GradeEntry/components/GradeEnt
 import GradeExport from "../screens/Lecturer/GradeExport";
 import EnterGradeCSV from "../screens/Lecturer/EnterGradeCSV";
 import SearchStudent from "../screens/Lecturer/SearchStudent";
+import NewPost from "../screens/NewPost";
 
 interface TabBarIconProps {
   name: string;
@@ -187,6 +188,8 @@ const AppNavigator = () => {
 
       if (token) {
         let role = await getUserRole();
+        console.log(role);
+
         setRole(role);
       }
       setIsLoading(false);
@@ -197,15 +200,16 @@ const AppNavigator = () => {
 
   const renderNavigators = () => (
     <>
+      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="GradeEntry" component={GradeEntry} />
       <Stack.Screen name="GradeEntryDetail" component={GradeEntryDetail} />
       <Stack.Screen name="GradeExport" component={GradeExport} />
       <Stack.Screen name="EnterGrade" component={EnterGradeCSV} />
       <Stack.Screen name="SearchStudent" component={SearchStudent} />
-      <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Forum" component={Fourm} />
       <Stack.Screen name="SubjectDetail" component={SubjectDetail} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="NewPost" component={NewPost} />
     </>
   );
 
@@ -235,12 +239,12 @@ const AppNavigator = () => {
     } else {
       return (
         <>
+          {renderNavigators()}
           <Stack.Screen
             name="LecturerNavigator"
             component={LecturerNavigator}
           />
           <Stack.Screen name="StudentNavigator" component={StudentNavigator} />
-          {renderNavigators()}
         </>
       );
     }

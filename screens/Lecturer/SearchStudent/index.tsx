@@ -18,7 +18,7 @@ const SearchStudent = () => {
     <View>
       <HeaderInfo title="Tìm kiếm sinh viên" />
       <View style={{ padding: 20 }}>
-        <ClassDropDown />
+        {/* <ClassDropDown /> */}
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}

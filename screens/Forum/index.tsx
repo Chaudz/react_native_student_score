@@ -1,13 +1,26 @@
-import { View, Pressable, Text, Image, ScrollView } from "react-native";
+import { View, Pressable, Text, ScrollView } from "react-native";
 import HeaderInfo from "../../components/HeaderInfo";
+import ListPost from "./components/LIstPost";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 
 const Fourm = () => {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
+  const handleClickCreatePost = () => {
+    navigation.navigate("NewPost");
+  };
+
   return (
     <ScrollView>
       <View>
         <HeaderInfo title="Diễn đàn hỏi đáp" />
         <View style={{ padding: 20 }}>
           <Pressable
+            onPress={handleClickCreatePost}
             style={{
               padding: 15,
               backgroundColor: "#1b00be",
@@ -26,234 +39,7 @@ const Fourm = () => {
               Thêm câu hỏi
             </Text>
           </Pressable>
-          {/* list comment */}
-          <View style={{ marginTop: 20 }}>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      color: "#1b00be",
-                      fontSize: 17,
-                    }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: "400",
-                      color: "#1b00be",
-                      fontSize: 15,
-                    }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "#1b00be" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      color: "#1b00be",
-                      fontSize: 17,
-                    }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: "400",
-                      color: "#1b00be",
-                      fontSize: 15,
-                    }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "#1b00be" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      color: "#1b00be",
-                      fontSize: 17,
-                    }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: "400",
-                      color: "#1b00be",
-                      fontSize: 15,
-                    }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "#1b00be" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      color: "#1b00be",
-                      fontSize: 17,
-                    }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: "400",
-                      color: "#1b00be",
-                      fontSize: 15,
-                    }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "#1b00be" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-            <View
-              style={{
-                borderTopWidth: 1,
-                borderColor: "#ddd",
-                paddingVertical: 10,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 10,
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/avatar.jpg")}
-                  style={{ width: 50, height: 50, borderRadius: 999 }}
-                  resizeMode="contain"
-                />
-                <View>
-                  <Text
-                    style={{
-                      fontWeight: "600",
-                      color: "#1b00be",
-                      fontSize: 17,
-                    }}
-                  >
-                    Bùi Văn Châu
-                  </Text>
-                  <Text
-                    style={{
-                      fontWeight: "400",
-                      color: "#1b00be",
-                      fontSize: 15,
-                    }}
-                  >
-                    Ngày đăng: 22/10/2003
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ marginTop: 5, color: "#1b00be" }}>
-                Dạ thầy cô cho em hỏi là muốn xin thời khóa biểu xem ở đâu ạ!
-              </Text>
-            </View>
-          </View>
+          <ListPost />
         </View>
       </View>
     </ScrollView>

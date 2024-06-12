@@ -15,40 +15,57 @@ import {
 import axios from "axios";
 
 interface Student {
-  id: string;
-  name: string;
+  avatar_url: string;
+  email: string;
+  full_name: string;
+  id: number;
+  role: number;
+  studen_code: string;
 }
 
-const ListStudent: React.FC = () => {
-  const [students, setStudents] = useState<Student[]>([
-    { id: "1", name: "Nguyen Van A" },
-    { id: "2", name: "Tran Thi B" },
-    { id: "3", name: "Le Van C" },
-    { id: "4", name: "Nguyen Van D" },
-    { id: "5", name: "Tran Thi E" },
-    { id: "6", name: "Le Van F" },
-    { id: "7", name: "Nguyen Van G" },
-    { id: "8", name: "Tran Thi H" },
-    { id: "9", name: "Le Van I" },
-  ]);
+const ListStudent = ({ currentClassId }: { currentClassId: string }) => {
+  const [students, setStudents] = useState<Student[]>([]);
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
-  const handleClick = () => {
-    navigation.navigate("GradeEntryDetail");
+  const handleClick = (id: number, name: string, code: string) => {
+    navigation.navigate("GradeEntryDetail", {
+      classId: currentClassId,
+      studentId: id,
+      codeStudent: code,
+      studentName: name,
+    });
   };
 
+  useEffect(() => {
+    try {
+      if (currentClassId) {
+        const getAllStudentByClassId = async () => {
+          const response = await axios.get(
+            `${process.env["API_BASE_URL"]}/api/classes/${currentClassId}/students/`
+          );
+          setStudents(response.data);
+        };
+        getAllStudentByClassId();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentClassId]);
+
   return (
-    <View style={styles.container}>
+    <View>
       <FlatList
         data={students}
-        keyExtractor={(item) => item.id}
+        // keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableHighlight
             style={styles.studentContainer}
             underlayColor="#DDDDDD"
-            onPress={handleClick}
+            onPress={() => {
+              handleClick(item.id, item.full_name, item.studen_code);
+            }}
           >
-            <Text style={styles.studentName}>{item.name}</Text>
+            <Text style={styles.studentName}>{item.full_name}</Text>
           </TouchableHighlight>
         )}
         style={styles.list}

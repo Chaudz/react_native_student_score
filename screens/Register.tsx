@@ -110,7 +110,7 @@ const RegisterScreen = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#00ad00",
+          backgroundColor: "white",
         }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled
@@ -156,7 +156,7 @@ const RegisterScreen = () => {
           <TouchableHighlight
             style={{
               marginTop: 20,
-              backgroundColor: "green",
+              backgroundColor: "#1b00be",
               borderRadius: 15,
               padding: 10,
             }}

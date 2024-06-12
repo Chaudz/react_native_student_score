@@ -36,8 +36,6 @@ const LoginScreen = () => {
         }
       );
 
-      console.log(response.data);
-
       if (response.data) {
         await AsyncStorage.setItem(
           "userId",
@@ -67,7 +65,6 @@ const LoginScreen = () => {
       }
     } catch (error) {
       Alert.alert("Please fill all fields and try again");
-      console.log("eooor", error);
     }
   };
   const handleClickRegister = () => {
@@ -106,7 +103,7 @@ const LoginScreen = () => {
             />
             <Pressable onPress={handleClickRegister}>
               <Text
-                style={{ textAlign: "right", color: "white", marginEnd: 20 }}
+                style={{ textAlign: "right", color: "black", marginEnd: 20 }}
               >
                 Đăng ký
               </Text>

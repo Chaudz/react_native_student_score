@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import Subject from "./Subject";
 import { useEffect, useState } from "react";
 import useListSubjectStore from "../../../../store/student/listSubject";
@@ -36,6 +36,20 @@ const ListSubject = () => {
     }
     getSubjects();
   }, []);
+
+  if (listSubject.length == 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="#1b00be" />
+      </View>
+    );
+  }
 
   return (
     <View style={{ marginTop: 20, paddingHorizontal: 20 }}>
