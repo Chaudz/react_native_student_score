@@ -48,7 +48,6 @@ const GradeExport = () => {
         await downloadCSV(data);
       }
     } catch (error) {
-      console.error("Failed to export grades:", error);
       Alert.alert("Error", "Failed to export grades");
     }
   };

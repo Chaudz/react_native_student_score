@@ -64,8 +64,9 @@ const EnterGradeCSV: React.FC = () => {
             },
           }
         );
-
-        Alert.alert("Success", "CSV file uploaded successfully!");
+        if (response.data) {
+          Alert.alert("Success", "CSV file uploaded successfully!");
+        }
       }
     } catch (error: any) {
       Alert.alert("Error", "Failed to upload CSV: " + error.message);

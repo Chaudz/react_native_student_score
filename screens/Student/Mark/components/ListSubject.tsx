@@ -5,18 +5,6 @@ import useListSubjectStore from "../../../../store/student/listSubject";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const listSubject = [
-  {
-    title: "Kỹ thuật lập trình",
-  },
-  {
-    title: "Cấu trúc dữ liệu và giải thuật",
-  },
-  {
-    title: "Lập trình JavaScript",
-  },
-];
-
 const ListSubject = () => {
   const { setSubjects } = useListSubjectStore();
   const [listSubject, setListSubject] = useState([]);

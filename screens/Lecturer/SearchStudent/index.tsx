@@ -3,22 +3,21 @@ import { View, TextInput, StyleSheet, TouchableHighlight } from "react-native";
 import HeaderInfo from "../../../components/HeaderInfo";
 import ClassDropDown from "../../../components/ClassDropDown";
 import { AntDesign } from "@expo/vector-icons";
-import ListStudent from "../../../components/ListStudent";
+import ListStudent from "./components/ListStudent";
 
 const SearchStudent = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [classId, setClassId] = useState("");
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    // Thêm logic tìm kiếm ở đây
-    console.log("Searching for:", query);
   };
 
   return (
     <View>
       <HeaderInfo title="Tìm kiếm sinh viên" />
       <View style={{ padding: 20 }}>
-        {/* <ClassDropDown /> */}
+        <ClassDropDown updateClassId={setClassId} />
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -34,7 +33,7 @@ const SearchStudent = () => {
             <AntDesign name="search1" size={24} color="black" />
           </TouchableHighlight>
         </View>
-        <ListStudent />
+        <ListStudent classId={classId} searchName={searchQuery} />
       </View>
     </View>
   );

@@ -23,7 +23,6 @@ const HeaderInfo = ({ title }: { title: string }) => {
   const navigation = useNavigation();
 
   const handleBack = () => {
-    console.log(route.name);
     navigation.goBack();
   };
 

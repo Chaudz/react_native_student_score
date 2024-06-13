@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { TouchableHighlight, View, Text, StyleSheet } from "react-native";
+import {
+  TouchableHighlight,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import ClassDropDown from "../../../components/ClassDropDown";
 import HeaderInfo from "../../../components/HeaderInfo";
 import ListStudent from "./components/ListStudent";
@@ -9,8 +15,6 @@ const GradeEntry: React.FC = () => {
   const [currentClassId, setCurrentClassId] = useState("");
 
   const handleLookGrade = async () => {
-    console.log(currentClassId);
-
     try {
       const response = await axios.post(
         `${process.env.API_BASE_URL}/api/lock_grade/`,
@@ -18,7 +22,11 @@ const GradeEntry: React.FC = () => {
           class_id: currentClassId,
         }
       );
-      console.log(response.data, "-------------");
+      if (response.data) {
+        console.log(response.data);
+
+        Alert.alert("Đã khóa điểm thành công");
+      }
     } catch (error) {}
   };
 

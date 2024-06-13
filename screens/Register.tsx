@@ -20,9 +20,6 @@ import {
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 
-const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/doguzyfn7/image/upload";
-const UPLOAD_PRESET = "demo0002";
-
 const RegisterScreen = () => {
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
@@ -39,8 +36,6 @@ const RegisterScreen = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
@@ -50,8 +45,8 @@ const RegisterScreen = () => {
     const data = new FormData();
     data.append("file", {
       uri: imageUri,
-      type: "image/jpeg", // hoặc 'image/png'
-      name: "upload.jpg", // hoặc 'upload.png'
+      type: "image/jpeg",
+      name: "upload.jpg",
     });
     data.append("upload_preset", `${process.env["UPLOAD_PRESET"]}`);
     try {
@@ -149,7 +144,11 @@ const RegisterScreen = () => {
           />
 
           <View style={styles.photoContainer}>
-            <Button title="Choose Photo" onPress={pickImage} />
+            <Button
+              title="Choose Photo"
+              onPress={pickImage}
+              color={"#1b00be"}
+            />
             {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
 

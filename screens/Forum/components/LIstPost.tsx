@@ -3,7 +3,7 @@ import Post from "./Post";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import formatDate from "../../../utils/formatTime";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 interface IAuthor {
   id: number;

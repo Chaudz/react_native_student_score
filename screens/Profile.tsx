@@ -1,15 +1,10 @@
 import { Button, View } from "react-native";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
   return (
     <View>
       <View style={{ height: 20 }}></View>
-      <Button
-        onPress={() => {
-          console.log("You tapped the button!");
-        }}
-        title="Press Me"
-      />
+      <Button onPress={() => {}} title="Press Me" />
     </View>
   );
 };

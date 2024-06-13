@@ -30,13 +30,6 @@ import EnterGradeCSV from "../screens/Lecturer/EnterGradeCSV";
 import SearchStudent from "../screens/Lecturer/SearchStudent";
 import NewPost from "../screens/NewPost";
 
-interface TabBarIconProps {
-  name: string;
-  color: string;
-  focused: boolean;
-  library: "MaterialCommunityIcons" | "Ionicons";
-}
-
 const ROLES = {
   student: 3,
   teacher: 2,
@@ -96,7 +89,7 @@ const LecturerNavigator = () => (
         tabBarIcon: ({ color, size }) => (
           <Ionicons
             name="chatbubble-ellipses-outline"
-            size={24}
+            size={size}
             color={color}
           />
         ),
@@ -188,8 +181,6 @@ const AppNavigator = () => {
 
       if (token) {
         let role = await getUserRole();
-        console.log(role);
-
         setRole(role);
       }
       setIsLoading(false);

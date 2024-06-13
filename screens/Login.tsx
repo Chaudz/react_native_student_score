@@ -26,8 +26,6 @@ const LoginScreen = () => {
 
   const handleClickLogin = async () => {
     try {
-      console.log(process.env["API_BASE_URL"]);
-
       const response = await axios.post(
         `${process.env["API_BASE_URL"]}/api/login/`,
         {
